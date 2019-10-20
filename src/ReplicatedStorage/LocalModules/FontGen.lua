@@ -2,7 +2,10 @@
 
 local F = {}
 
-F.Font = "rbxassetid://3108589584"
+--F.Font = "rbxassetid://3108589584"
+
+F.Font = {img = "rbxassetid://4130867891", scale = 2}
+F.ScaleFont = {img = "rbxassetid://4130871993", scale = 8}
 
 F.FontBreakout = {
 	{"\00", "☺", "☻", "♥", "♦", "♣", "♠", "•", "◘", "○", "◙", "♂", "♀", "♪", "♫", "☼"  },
@@ -29,7 +32,7 @@ F.FontWidth = {
 
 }
 
-function F.CreateLetter(letter, color)
+function F.CreateLetter(letter, color, cfont)
 	local LetterX, LetterY = 1, 1
 	for y=1, #F.FontBreakout do
 		for x=1, #F.FontBreakout[y] do
@@ -41,11 +44,15 @@ function F.CreateLetter(letter, color)
 		end
 	end
 	
+	cfont = cfont or F.Font
+	
+	local t8 = cfont.scale * 8
+	
 	local ImageLabel = Instance.new("ImageLabel")
 	ImageLabel.Size = UDim2.new(0, 16, 0, 16)
-	ImageLabel.Image = F.Font
-	ImageLabel.ImageRectSize = Vector2.new(16, 16)
-	ImageLabel.ImageRectOffset = Vector2.new((LetterX-1) * 16, (LetterY-1) * 16)
+	ImageLabel.Image = cfont.img
+	ImageLabel.ImageRectSize = Vector2.new(t8, t8)
+	ImageLabel.ImageRectOffset = Vector2.new((LetterX-1) * t8, (LetterY-1) * t8)
 	ImageLabel.ScaleType = "Fit"
 	ImageLabel.Name = tostring(16 / (64 / F.FontWidth[LetterY][LetterX]))
 	ImageLabel.BackgroundTransparency = 1
@@ -86,12 +93,14 @@ local cursors = {}
 
 local v = false
 
-function F.CreateTextLabel(Text, sizeLimit, linesep, cursor)
+function F.CreateTextLabel(Text, sizeLimit, linesep, cursor, large)
 	local Frame = Instance.new("Frame")
 	local X = 0
 	local Y = 0
 	local CurrColor = colorcodes["f"]
 	local switchingColors = false
+	
+	local currFont = large and F.ScaleFont or F.Font
 
 	local function add_letter(letter, ign_linesep)
 		if (not ign_linesep) and letter == "&" then
@@ -106,7 +115,7 @@ function F.CreateTextLabel(Text, sizeLimit, linesep, cursor)
 			end
 		else
 
-			local LetterImg = F.CreateLetter(letter, CurrColor)
+			local LetterImg = F.CreateLetter(letter, CurrColor, currFont)
 			LetterImg.Parent = Frame
 			if (not ign_linesep) and sizeLimit and ((X + tonumber(LetterImg.Name)) > sizeLimit.X) then
 				X = 0
@@ -131,7 +140,7 @@ function F.CreateTextLabel(Text, sizeLimit, linesep, cursor)
 		switchingColors = false
 	end
 	if cursor then
-		local LetterImg = F.CreateLetter("_", CurrColor)
+		local LetterImg = F.CreateLetter("_", CurrColor, currFont)
 		LetterImg.Parent = Frame
 		LetterImg.Position = UDim2.new(0, X, 0, Y)
 		X = X + tonumber(LetterImg.Name) + 2

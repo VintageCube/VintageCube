@@ -31,9 +31,6 @@ local function onNewPlayer(ply)
 		end
 	end
 	
---	for i=24, 0 do
---		game.ReplicatedStorage.Remote.NetworkCharacter.add:FireClient(ply, i, tostring(i) .. "t")
---	end
 end
 
 
@@ -62,11 +59,6 @@ game.ReplicatedStorage.Remote.NetworkCharacter.update.OnServerEvent:Connect(func
 		end
 	end
 	
-	local cf = CFrame.new(x, y, z) * CFrame.Angles(0, math.rad(yaw), 0) * CFrame.Angles(math.rad(pitch), 0, 0) * CFrame.new(0, 0, -3)
-	
---	for i=24, 0 do
---		game.ReplicatedStorage.Remote.NetworkCharacter.update:FireAllClients(i, cf.p.X + math.random() - 0.5, cf.p.Y + math.random() - 0.5, cf.p.Z + math.random() - 0.5, (-pitch) % 360, (yaw + 180) % 360)
---	end
 	
 end)
 

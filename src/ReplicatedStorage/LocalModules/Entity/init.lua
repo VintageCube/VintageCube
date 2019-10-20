@@ -9,7 +9,7 @@ local Entity = {}
 
 local fontgen = require(game.ReplicatedStorage.LocalModules.FontGen)
 local SCALE_NAMETAGS = false
-local NAMETAGS_ALWAYS_VISIBLE = true
+local NAMETAGS_ALWAYS_VISIBLE = false
 
 local plyList = require(game.ReplicatedStorage.LocalModules.GeneralUI.PlyList)
 
@@ -61,11 +61,11 @@ end
 
 function Entity:tick(dt)
 	if self.show_nametag and not self.nametag then
-		self.nametag = Instance.new("BillboardGui")
+		self.nametag = Instance.new("BillboardGui") --TODO: make nametags only appear when you hover over the entity
 		
 		self.nametag.StudsOffsetWorldSpace = self.api.calculate_nametag_offset()
 		
-		self.nametag_txt = fontgen.CreateTextLabel(self.name) 
+		self.nametag_txt = fontgen.CreateTextLabel(self.name, nil, nil, nil, true) 
 		if SCALE_NAMETAGS then
 			self.nametag.Size = UDim2.new(0, self.nametag_txt.Size.X.Offset + 8, 0, self.nametag_txt.Size.Y.Offset + 8)
 		else
@@ -83,7 +83,7 @@ function Entity:tick(dt)
 		nametag_bg.Size = UDim2.new(1, 0, 1, 0)
 		nametag_bg.AnchorPoint = Vector2.new(0.5, 0.5)
 		nametag_bg.Position = UDim2.new(0.5, 0, 0.5, 0)
-		nametag_bg.BackgroundTransparency = 0.5
+		nametag_bg.BackgroundTransparency = 1--0.5
 		nametag_bg.BackgroundColor3 = Color3.new(0, 0, 0)
 		nametag_bg.BorderSizePixel = 0
 		
@@ -205,6 +205,10 @@ function Entity:destroy()
 end
 
 function Entity:init(autotick)
+	if self.active then
+		warn("Attempt to initialize already-active entity")
+		return
+	end
 	if not self.model_name then
 		error("Attempt to init with no model")
 	end

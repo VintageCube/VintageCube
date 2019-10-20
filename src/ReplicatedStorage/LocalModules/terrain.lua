@@ -6,7 +6,10 @@ local terrain = {
 	['tile004'] = 'rbxassetid://3115503205',
 	['tile005'] = 'rbxassetid://3115505878',
 	['tile006'] = 'rbxassetid://3713245823',
-	['tile007'] = 'rbxassetid://3115506116',
+	
+	--['tile007'] = 'rbxassetid://3115506116',
+	['tile007'] = 'rbxassetid://4132382338', --new non-minecraft bricks
+	
 	['tile008'] = 'rbxassetid://3115506197',
 	['tile009'] = 'rbxassetid://3115506252',
 	['tile010'] = 'rbxassetid://3115508894',
@@ -17,14 +20,19 @@ local terrain = {
 	--['tile014'] = 'rbxassetid://3115509240',
 	['tile014'] = 'rbxassetid://3821744003',
 	
-	['tile015'] = 'rbxassetid://3115511574',
+	--['tile015'] = 'rbxassetid://3115511574',
+	['tile015'] = 'rbxassetid://4131091961', --new non-minecraft sapling
+	
 	['tile016'] = 'rbxassetid://3115511697',
 	['tile017'] = 'rbxassetid://3115511777',
 	['tile018'] = 'rbxassetid://3115511884',
 	['tile019'] = 'rbxassetid://3115511964',
 	['tile020'] = 'rbxassetid://3115514414',
 	['tile021'] = 'rbxassetid://3115514498',
-	['tile022'] = 'rbxassetid://3115514564',
+	
+	--['tile022'] = 'rbxassetid://3115514564',
+	['tile022'] = 'rbxassetid://4131032605', -- new non-minecraft leaves
+	
 	['tile023'] = 'rbxassetid://3115514625',
 	['tile024'] = 'rbxassetid://3115514757',
 	['tile025'] = 'rbxassetid://3115516979',

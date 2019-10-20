@@ -79,7 +79,7 @@ repeat wait() until (#game.Players:GetChildren() > 0)
 
 wait(.1)
 
-GenWorld(128, 72, 128)
+GenWorld(92, 72, 92)
 
 
 

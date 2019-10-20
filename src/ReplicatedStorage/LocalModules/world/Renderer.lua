@@ -594,7 +594,7 @@ end
 
 
 
-local max_render_distance = 8
+local max_render_distance = 2048
 
 function r:set_render_distance(to)
 	to = math.floor(to)

@@ -35,8 +35,8 @@ function NetworkPlayer.Update(plyId, x, y, z, pitch, yaw)
 		datatable.ent:set_orientation(Vector3.new(pitch, yaw, 0))
 		
 		if not datatable.initiated then
-			datatable.ent:init(true)
 			datatable.initiated = true
+			datatable.ent:init(true)
 		end
 	end
 end
