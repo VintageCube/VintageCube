@@ -90,7 +90,23 @@ end
 
 local update_funcs = {}
 
+local banned_blocks = {blk.FLOWING_LAVA, blk.FLOWING_WATER}
+
 game.ReplicatedStorage.Remote.ChangeBlock.OnServerEvent:Connect(function(ply, x, y, z, new)
+	if(require(game.ServerStorage.Admin.Commands).IsBuildBanned(ply)) then
+		require(game.ServerStorage.Chat).SysWhisper(ply, "You are banned from building!")
+		game.ReplicatedStorage.Remote.ChangeBlock:FireClient(ply, x, y, z, module.GetAbsoluteBlock(x, y, z))
+		return
+	end
+
+	for k, v in pairs(banned_blocks) do
+		if(new == v) then
+			require(game.ServerStorage.Chat).SysWhisper(ply, "You may not place that block!")
+			game.ReplicatedStorage.Remote.ChangeBlock:FireClient(ply, x, y, z, module.GetAbsoluteBlock(x, y, z))
+			return
+		end
+	end
+
 	module.SetAbsoluteBlock(x, y, z, new)
 	game.ReplicatedStorage.Remote.ChangeBlock:FireAllClients(x, y, z, new)
 	

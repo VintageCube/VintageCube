@@ -8,6 +8,8 @@ Chat.LastText = ""
 Chat.InvisTexts = {}
 Chat.VisTexts = {}
 
+Chat.CmdPrefix = "?"
+
 function Chat.on_text_change(text)
 	Chat.LastText = Chat.Text
 	Chat.Text = text
@@ -81,6 +83,7 @@ function Chat.send()
 	txt = txt:gsub("\n", ""):gsub("\13", ""):gsub("\r", ""):gsub("\10", "")
 	if #txt == 0 or (string.gsub(txt, "%s", "") == "") then Chat.LastText = "" Chat.Text = "" return end
 	game.ReplicatedStorage.Remote.Chat:FireServer(txt)
+	if(txt:sub(0, #Chat.CmdPrefix) == Chat.CmdPrefix) then return end
 	Chat.add_message(game.Players.LocalPlayer.Name, txt)
 end
 
@@ -110,7 +113,14 @@ function Chat.isOpen()
 	return (Chat.isopen == true) or ((tick() - Chat.closed) < 0.1)
 end
 
+game.ReplicatedStorage.Remote.GetCmdPrefix.OnClientInvoke = function(newPrefix)
+	Chat.CmdPrefix = newPrefix
+end
+
 function Chat.init(lockfunc, unlockfunc, api)
+	spawn(function()
+		Chat.CmdPrefix = game.ReplicatedStorage.Remote.GetCmdPrefix:InvokeServer()
+	end)
 	Chat.lock = lockfunc
 	Chat.unlock = unlockfunc
 	Chat.api = api

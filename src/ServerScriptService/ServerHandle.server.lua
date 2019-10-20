@@ -30,7 +30,9 @@ local Structure = {
 		HitMe = "RemoteEvent",
 		LoadLocalCharacter = "RemoteEvent",
 		OnSetPosition = "RemoteEvent",
-		ReceiveWorldData = "RemoteEvent"
+		ReceiveWorldData = "RemoteEvent",
+
+		GetCmdPrefix = "RemoteFunction"
 	}
 }
 
